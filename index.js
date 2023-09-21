@@ -19,6 +19,9 @@ mongoose.connect(
   }
 );
 
+// Enable CORS
+app.use(cors());
+
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -26,9 +29,6 @@ app.use(bodyParser.json());
 // Use the userRoutes for user-related endpoints
 app.use("/api/users", userRoutes);
 app.use("/api/timeslots", timeSlotRoutes);
-
-// Enable CORS
-app.use(cors());
 
 // Start the Express server
 app.listen(port, () => {
