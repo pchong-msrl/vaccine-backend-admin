@@ -9,6 +9,11 @@ const vaccineUserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  gender: {
+    type: String,
+    enum: ["Male", "Female", "male", "female"],
+    required: true,
+  },
   dateOfBirth: {
     type: Date,
     required: true,

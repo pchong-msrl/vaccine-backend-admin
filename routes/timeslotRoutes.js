@@ -32,6 +32,7 @@ router.get("/with-registered-users", authenticateToken, async (req, res) => {
     // Find all timeslots where registeredUserId is not null
     const timeslotsWithRegisteredUsers = await TimeSlot.find({
       registeredUserId: { $ne: null },
+      isIngested: false,
     }).populate("registeredUserId");
 
     res.json({ timeslotsWithRegisteredUsers });
@@ -39,6 +40,24 @@ router.get("/with-registered-users", authenticateToken, async (req, res) => {
     res
       .status(500)
       .json({ error: "Failed to fetch timeslots with registered users" });
+  }
+});
+
+// Route to update isIngested
+router.post("/ingested/:id", async (req, res) => {
+  try {
+    // Get timeslot by ID
+    const timeslot = await TimeSlot.findById(req.params.id);
+
+    // Update isIngested to true
+    timeslot.isIngested = true;
+
+    // Save updated timeslot
+    await timeslot.save();
+
+    res.json(timeslot);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update timeslot" });
   }
 });
 
