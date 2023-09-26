@@ -44,7 +44,7 @@ router.get("/with-registered-users", authenticateToken, async (req, res) => {
 });
 
 // Route to update isIngested
-router.post("/ingested/:id", async (req, res) => {
+router.post("/ingested/:id", authenticateToken, async (req, res) => {
   try {
     // Get timeslot by ID
     const timeslot = await TimeSlot.findById(req.params.id);
